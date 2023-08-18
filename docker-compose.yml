@@ -55,8 +55,9 @@ services:
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z # ro(read-only), Z(container내에서 접근할 수 있게 relable 한다)
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+      - ./jar/mysql-connector-java-8.0.30.jar:/usr/share/logstash/logstash-core/lib/jars/mysql-connector-java-8.0.30.jar:ro,Z #mysql 사용을 위한 jdbc-connector 다운
     ports:
       - "5044:5044"
       - "50000:50000/tcp"

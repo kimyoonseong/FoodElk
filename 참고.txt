@@ -1,0 +1,33 @@
+# id: elastic / pw: woorifisa1!
+
+# 실행
+docker-compose build && docker-compose up -d
+
+
+# nori plugin 사용 참고
+https://ahngo13.github.io/elasticsearch-nori-plugin/
+
+GET logstash-hyunji/_search
+
+# nori 토크나이저 적용
+PUT card_data
+{
+  "settings": {
+    "index": {
+      "analysis": {
+          "tokenizer": "nori_tokenizer"
+        }
+      }
+    }
+  }
+
+# card_data 인덱스에 한국어 토크나이징 적용 사용
+POST _reindex
+{
+    "source": {
+        "index": "logstash-hyunji"
+    },
+    "dest": {
+        "index": "card_data"
+    }
+}
